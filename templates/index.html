@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treasure Hunt – Rush Hour</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #2b1d16;
+  color: #f2e1c1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  width: 100%;
+  background: #1c120e;
+  padding: 14px 22px;
+  display: flex;
+  justify-content: space-between; /* Pushes welcome left & nav right */
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(230,201,168,0.2);
+}
+
+.welcome {
+  font-size: 20px;
+  font-weight: 600;
+  color: #d9b38c;
+  text-align: left;
+}
+
+.nav-right {
+  display: flex;
+  gap: 18px;
+}
+
+.nav-right a {
+  text-decoration: none;
+  color: #c69c6d;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  transition: 0.3s;
+}
+
+.nav-right a i {
+  font-size: 18px;
+}
+
+.nav-right a:hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* MAIN CONTENT */
+.page-wrapper {
+  flex: 1;
+  width: 92%;          /* Side borders */
+  max-width: 600px;
+  margin: auto;
+  padding-top: 90px;   /* Prevent overlap with fixed header */
+}
+
+/* DESCRIPTION BOX */
+.desc-box {
+  width: 100%;
+  background: rgba(255,248,240,0.05);
+  border: 1px solid rgba(217,179,140,0.25);
+  padding: 20px 24px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.description {
+  font-size: 17px;
+  line-height: 1.6;
+  text-align: justify;
+  opacity: 0.9;
+}
+
+/* START BUTTON */
+.start-btn {
+  display: block;
+  margin: auto;
+  padding: 14px 26px;
+  font-size: 18px;
+  background: #8b5e3c;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.start-btn:hover {
+  background: #a97458;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(193,127,89,0.4);
+}
+
+/* TITLE SECTION */
+.rush-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  color: #e6c9a8;
+  margin-bottom: 6px;
+}
+
+.tagline {
+  text-align: center;
+  font-size: 18px;
+  color: #c69c6d;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.rules-box {
+  width: 100%;
+  background: rgba(255,248,240,0.05);
+  border: 1px solid rgba(217,179,140,0.25);
+  padding: 18px 24px;
+  border-radius: 14px;
+  margin-bottom: 26px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-align: left;
+}
+
+.rules-box h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #e6c9a8;
+  margin-bottom: 12px;
+}
+
+.rules-box ul {
+  padding-left: 18px;
+}
+
+.rules-box ul li {
+  font-size: 17px;
+  color: #d9b38c;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 480px) {
+  .rules-box h3 { font-size: 18px; }
+  .rules-box ul li { font-size: 14px; }
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 14px;
+  background: #1a0f0b;
+  font-size: 14px;
+  color: #a67b5b;
+  border-top: 1px solid rgba(230,201,168,0.1);
+  width: 100%;
+}
+
+/* PHONE RESPONSIVE FIX */
+@media (max-width: 480px) {
+  .welcome { font-size: 16px; }
+  .nav-right { gap: 12px; }
+  .nav-right a { font-size: 14px; }
+  .nav-right a i { font-size: 15px; }
+  .rush-title { font-size: 24px; }
+  .tagline { font-size: 14px; }
+  .desc-box { padding: 16px 18px; }
+  .description { font-size: 14px; }
+  .start-btn { font-size: 15px; padding: 12px 20px; }
+  footer { font-size: 12px; }
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- TOP HEADER -->
+<div class="header">
+  <h3 class="welcome">Welcome, {{ team }} 👋</h3>
+  <div class="nav-right">
+    <a href="/index"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="/leaderboard"><i class="fa-solid fa-ranking-star"></i>Leaderboard</a>
+  </div>
+</div>
+
+<!-- MAIN SECTION -->
+<div class="page-wrapper">
+
+  <h1 class="rush-title">Rush Hour</h1>
+  <h2 class="tagline">Think Fast ⚡ Solve Smart 🧠 Hunt Now 🧭</h2>
+
+  <div class="desc-box">
+    <p class="description">
+      Rush Hour is a fast-paced, adrenaline-filled treasure hunt where time decides your fate. Crack clever clues, decode strategic puzzles, and unlock each level in a race to the treasure. Accuracy, teamwork, and speed will lead you to victory. The hunt begins — are you ready to rush?
+    </p>
+  </div>
+
+  <button class="start-btn" onclick="location.href='/level1'">Start Here</button><br><br>
+  <!-- RULES SECTION -->
+<div class="rules-box">
+  <h3>Rules & Regulations</h3>
+  <ul>
+    <li>Login is mandatory to enter the hunt.</li>
+    <li>Clues must be solved in the given order only.</li>
+    <li>No cheating or external help is allowed.</li>
+    <li>Any violation leads to immediate disqualification.</li>
+    <li>Organizer’s decision is final.</li>
+    <li>Be fast, be smart, and enjoy the hunt!</li>
+  </ul>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 Treasure Hunt | Rac Siet
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard – Treasure Hunt</title>
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #2b1d16;
+  color: #f2e1c1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 14px;
+}
+
+/* HEADER */
+.header {
+  width: 100%;
+  background: #1c120e;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid rgba(198,156,109,0.3);
+  box-sizing: border-box;
+}
+
+.header .left-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #e6c9a8;
+}
+
+.nav-right a {
+  text-decoration: none;
+  color: #f2e1c1;
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 14px;
+}
+
+/* MAIN WRAPPER */
+.page-wrapper {
+  width: 100%;
+  max-width: 750px;
+  margin-top: 18px;
+  flex: 1;
+}
+
+/* TITLE */
+.board-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #d9b38c;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+/* TABLE CONTAINER */
+.table-box {
+  width: 100%;
+  overflow-x: auto;
+  background: rgba(255,248,240,0.05);
+  border: 1.8px solid rgba(217,179,140,0.3);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+  box-sizing: border-box;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+th {
+  background: rgba(198,156,109,0.25);
+  color: #fff;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+}
+
+td {
+  padding: 11px;
+  border-bottom: 1px solid rgba(230,201,168,0.12);
+  color: #ffe8c9;
+  font-weight: 600;
+}
+
+tr:hover {
+  background: rgba(255,255,255,0.07);
+}
+
+.rank {
+  color: #ffcc8c;
+  font-weight: 700;
+}
+
+.score {
+  color: #8cffb0;
+  font-weight: 700;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .header .left-text { font-size: 16px; }
+  .nav-right a { font-size: 13px; }
+  .board-title { font-size: 18px; }
+  table { font-size: 13px; }
+  th { font-size: 14px; }
+  td { padding: 8px; }
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 13px;
+  background: #1a0f0b;
+  font-size: 12.5px;
+  color: #c69c6d;
+  border-top: 2px solid rgba(230,201,168,0.2);
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: auto;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="left-text">Rush Hour Treasure Hunt</div>
+  <div class="nav-right">
+    <a href="/index"><i class="fa-solid fa-house"></i> Home</a>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="page-wrapper">
+  <div class="level-title">🏆 Leaderboard (Hunt Live)</div>
+
+  <div class="table-box">
+    <table id="leaderTable">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team</th>
+          <th>Score</th>
+          <th>Last Update</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>© 2026 Treasure Hunt | Final Leaderboard</footer>
+
+<!-- SCRIPT -->
+<script>
+async function loadLeaderboard(){
+   const res = await fetch("/get_scores");
+   const data = await res.json();
+
+   let combined = Object.entries(data.scores).map(([team, info]) => ({
+       team,
+       score: info.score,
+       updated_at: info.updated_at,
+       login_time: info.login_time
+   }));
+
+   combined.sort((a,b) => b.score - a.score);
+
+   const tbody = document.querySelector("#leaderTable tbody");
+   tbody.innerHTML = "";
+
+   combined.forEach((item, i) => {
+      tbody.innerHTML += `
+        <tr>
+          <td class="rank">${i+1}</td>
+          <td>${item.team}</td>
+          <td class="score">${item.score}</td>
+          <td>${item.updated_at || "-"}</td>
+        </tr>
+      `;
+   });
+}
+
+loadLeaderboard();
+setInterval(loadLeaderboard, 3000); // live refresh every 3 seconds
+</script>
+
+</body>
+</html>
