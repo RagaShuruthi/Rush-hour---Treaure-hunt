@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,19 +26,22 @@ body {
   width: 100%;
   background: #1c120e;
   padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
   border-bottom: 2px solid rgba(198,156,109,0.3);
   box-sizing: border-box;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:70px;
-  font-size:20px;
-  font-weight:700;
-  color:#e6c9a8;
+}
+
+.header .left-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e6c9a8;
+  white-space: nowrap;
 }
 
 .page-wrapper {
@@ -94,7 +97,7 @@ body {
   text-align: center;
 }
 
-#clueBox {
+#clue-box {
   display: none;
   text-align: center;
   margin-top: 22px;
@@ -138,73 +141,70 @@ body {
 
 <body>
 
-<div class="header">Rush Hour - 2026</div>
+<div class="header">
+  <div class="left-text">Rush Hour - 2026<div>
+</div>
 
 <div class="page-wrapper">
-
   <h2 style="text-align:center;color:#ffddb0;">Level 5 – Tower & Flip Final</h2>
 
   <div class="desc-box">
     <b>Level 5 Challenge:</b><br>
-    Scan the QR code to unlock the next clue
+    Scan the Qr code to ublock the next clue
   </div>
 
+  <!-- QR Buttons -->
   <button class="scan-btn" onclick="startQRScan()">Scan QR (Camera)</button>
   <button class="scan-btn" onclick="document.getElementById('qr-input-file').click()">Upload QR & Scan</button>
 
+  <!-- Upload input -->
   <input type="file" id="qr-input-file" accept="image/*" style="display:none;">
 
+  <!-- QR Scanner -->
   <div id="reader"></div>
 
+  <!-- Success Image -->
   <img id="success-img" src="/static/clgbackside.jpeg" alt="Unlocked Image">
-  <div id="clueBox"><span id="clue-text">Your next clue in the above mentioned place</span></div>
 
+  <!-- Clue Box -->
+  <div id="clue-box">
+    <span id="clue-text">Your next clue in the aboce mentioned place </span>
+  </div>
+
+  <!-- Level 6 Button -->
   <div id="navNext" style="display:none;text-align:center;margin-top:20px;">
     <button class="scan-btn" onclick="goLevel6()">Move to Level 6</button>
   </div>
-
 </div>
 
-<footer class="footer">© 2026 Treasure Hunt | Level 5 Final Stage</footer>
+<footer class="footer">
+  © 2026 Treasure Hunt | Level 5 Final Stage
+</footer>
 
 <script>
 const EXPECTED_QR = "SIET-RUSH-HUNT-2026";
-
-let qrReader = new Html5Qrcode("reader");
+let html5Qr = new Html5Qrcode("reader");
 
 function startQRScan() {
   document.getElementById("success-img").style.display = "none";
-  document.getElementById("clueBox").style.display = "none";
+  document.getElementById("clue-box").style.display = "none";
   document.getElementById("navNext").style.display = "none";
 
   document.getElementById("reader").style.display = "block";
 
-  qrReader.start(
+  html5Qr.start(
     { facingMode: "environment" },
     { fps: 10, qrbox: 250 },
     (decodedText) => {
-      qrReader.stop().then(() => validateQR(decodedText));
+      html5Qr.stop().then(() => validateQR(decodedText));
     }
   ).catch(() => alert("❌ Camera permission denied"));
 }
 
 function validateQR(scannedText) {
-  if (scannedText.trim().toUpperCase() === EXPECTED_QR.toUpperCase()) {
+  if (scannedText.toUpperCase() === EXPECTED_QR.toUpperCase()) {
     document.getElementById("success-img").style.display = "block";
-    document.getElementById("clueBox").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
-    document.getElementById("navNext").style.display = "block";
+    document.getElementById("clue-box").style.display = "block";
     document.getElementById("navNext").style.display = "block";
   } else {
     alert("❌ Wrong QR! Try again");
@@ -215,7 +215,7 @@ document.getElementById("qr-input-file").addEventListener("change", async functi
   const file = this.files[0];
   if (!file) return;
   try {
-    const decoded = await qrReader.scanFile(file, true);
+    const decoded = await html5Qr.scanFile(file, true);
     validateQR(decoded);
   } catch {
     alert("❌ No QR detected!");
@@ -226,18 +226,6 @@ function goLevel6() {
   window.location.href = "/level6";
 }
 
-// 🚫 Block this page if Level 1 not completed
-if(localStorage.getItem("level1_done") !== "true"){
-  document.body.innerHTML = "";
-  document.body.style.display="flex";
-  document.body.style.justifyContent="center";
-  document.body.style.alignItems="center";
-  document.body.style.height="100vh";
-  document.body.style.fontSize="24px";
-  document.body.style.color="#ffb0b0";
-  document.body.style.fontWeight="700";
-  document.body.innerText = "❗ Complete Level 1 first to continue!";
-}
 
 // Disable back button
 history.pushState(null, null, location.href);

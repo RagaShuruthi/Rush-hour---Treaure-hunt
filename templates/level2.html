@@ -7,28 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #2b1d16;
-  color: #f2e1c1;
-  min-height: 100vh;
-  padding: 14px;
-  padding-top: 70px;
-  padding-bottom: 90px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-.mcq-box {
-  background: rgba(255,255,255,0.08);
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 14px;
-  border-left: 4px solid #c69c6d;
-  font-weight: 600;
-  min-height: 140px;
-}
+
+
 .header {
   width: 100%;
   background: #1c120e;
@@ -41,14 +21,67 @@ body {
   font-weight: 700;
   color: #e6c9a8;
   box-sizing: border-box;
-  text-align: center;
 }
-.submit-btn, .check-btn, #level3Btn {
+
+.page-wrapper {
+  width: 96%;
+  max-width: 750px;
+  margin: auto;
+  padding-top: 130px;
+  padding-bottom: 120px; /* ✔ gives space for footer and forces scroll illusion fix */
+  flex: 1;
+  min-height: 100%; /* ✔ ensures wrapper expands with content */
+}
+
+.desc-box {
+  width: 100%;
+  background: rgba(255,248,240,0.06);
+  border: 1px solid rgba(217,179,140,0.3);
+  padding: 18px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: justify;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+  color:#d9c5b0;
+}
+
+.mcq-box {
+  background: rgba(255,255,255,0.08);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  border-left: 4px solid #c69c6d;
+  font-weight: 600;
+}
+
+.check-btn {
+  background:#d9b38c;
+  color:#000;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+  margin-top:10px;
+}
+
+.result-icon {
+  margin-left:10px;
+  font-size:18px;
+  font-weight:700;
+  color:#fff8d2;
+}
+
+.submit-btn, #level3Btn {
   margin-top: 20px;
   padding: 12px;
   font-size: 16px;
+  background: #8b5e3c;
   border: none;
   border-radius: 8px;
+  color: #fff;
   font-weight: 700;
   cursor: pointer;
   width: 100%;
@@ -57,18 +90,12 @@ body {
   margin-right: auto;
   display: block;
 }
-.check-btn {
-  background:#d9b38c;
-  color:#000;
-  padding:6px 12px;
-  max-width:260px;
-  margin-top:10px;
-}
+
 #level3Btn {
   display:none;
   background:#4caf50;
-  color:#000;
 }
+
 #locationClue {
   display:none;
   background: rgba(0,0,0,0.4);
@@ -81,6 +108,7 @@ body {
   color:#a8ffb0;
   border:2px dashed #c69c6d;
 }
+
 footer {
   text-align: center;
   padding: 14px;
@@ -99,34 +127,39 @@ footer {
 
 <body>
 
-<div class="header">Rush Hour - 2026</div>
+<div class="header">Rush Hour Treasure Hunt</div>
 
 <div class="page-wrapper">
 
-  <h2 style="color:#ffddb0;text-align:center;">Level 2 – The Riddle Vault</h2>
+  <!-- Level 2 Description in English -->
+  <h2 style="color:#ffddb0;">Level 2 – The Riddle Vault</h2>
   <div class="desc-box">
      Welcome to Level 2 of the Rush Hour Treasure Hunt! Enter the unlock code to reveal 5 Pongal-festival themed MCQ riddles from our vault. Solve all correctly to reveal your next location clue and proceed to Level 3!
   </div>
 
-  <div style="width:100%;max-width:320px;margin:auto;">
+  <!-- Unlock Code Section -->
+  <div class="code-section" style="width:100%;max-width:320px;margin:auto;">
      <input style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(217,179,140,0.3);background:rgba(255,255,255,0.1);color:#fff;outline:none;font-size:16px;box-sizing:border-box;" 
      placeholder="Enter Level 2 Unlock Code" id="unlockCode">
      <button class="submit-btn" onclick="unlockQuiz()">Unlock Vault</button>
   </div>
 
+  <!-- Quiz Section -->
   <div id="quizSection" style="display:none;">
-      <h3 style="text-align:center;color:#ffdca8;margin-top:30px;">🪔 Pongal Festival Quiz</h3>
+      <h3 class="level-title" style="text-align:center;color:#ffdca8;margin-top:30px;">🪔 Pongal Festival Quiz</h3>
       <div id="mcqContainer"></div>
       <button class="submit-btn" onclick="checkAllAnswers()">Submit</button>
   </div>
 
+  <!-- Level 3 Location Clue -->
   <div id="locationClue">📍 Level 3 Location: The place where Wright brothers sleeping</div>
+
+  <!-- Move to Level 3 Button -->
   <button id="level3Btn" onclick="goToLevel3()">Level 3க்கு செல்ல</button>
 
 </div>
 
 <footer>© 2026 Rush Hour | Level 2 Challenge</footer>
-
 <script>
 const questions = [
   {q:"பொங்கல் பண்டிகை எந்த மாதத்தில் கொண்டாடப்படுகிறது?",a:"தை",options:["ஆடி","சித்திரை","தை","மாசி"]},
@@ -151,28 +184,25 @@ const questions = [
   {q:"பானைக்கு கட்டப்படும் புனித கயிறு?",a:"மஞ்சள் கயிறு",options:["பட்டு கயிறு","மஞ்சள் கயிறு","நூல்","சங்கிலி"]}
 ];
 
-let scanner = new Html5Qrcode("mcqContainer");
-
 function pickNewSet(){
   questions.forEach(q => q.options = q.options.sort(()=>Math.random()-0.5));
-  return questions.sort(()=>Math.random()-0.5).slice(0,20);
+  return questions.sort(()=>Math.random()-0.5).slice(0,5);
 }
 
-let selected5 = pickNewSet().slice(0,5);
+let selected5 = pickNewSet();
 
 function unlockQuiz(){
-  if(localStorage.getItem("level1_done") !== "true"){
-    alert("❗ Level 1 complete செய்யாமல் தொடர முடியாது!");
-    return;
-  }
   let code = document.getElementById("unlockCode").value.trim().toUpperCase();
   if(code === "Q34W56E56"){
     document.getElementById("quizSection").style.display="block";
+    document.getElementById("level3Btn").style.display="none";
+    document.getElementById("locationClue").style.display="none";
     renderQuiz();
   } else alert("❌ தவறான Code! மீண்டும் முயற்சிக்கவும் 🩶");
 }
 
 function renderQuiz(){
+  selected5 = pickNewSet();
   document.getElementById("mcqContainer").innerHTML = selected5.map((m,i)=>
     '<div class="mcq-box">'+
       '<p>'+(i+1)+'. '+m.q+'</p>'+
@@ -187,42 +217,46 @@ function renderQuiz(){
 
 function resetQuiz(){
   document.getElementById("quizSection").style.display="none";
-  selected5 = pickNewSet().slice(0,5);
-  selected5 = selected5.sort(()=>Math.random()-0.5);
+  selected5 = pickNewSet();
+  document.getElementById("mcqContainer").innerHTML="";
+  alert("❌ ஒரு பதில் தவறு! புதிய கேள்விகள் Load செய்யப்பட்டது 🔄 மீண்டும் Unlock செய்து முயற்சிக்கவும் 🩶");
 }
 
 function checkAnswer(i){
-  let s = document.querySelector("input[name='mcq"+i+"']:checked");
-  if(!s){ document.getElementById("res"+i).textContent="❌ தேர்வு செய்யவில்லை!"; return; }
-  if(s.value.toUpperCase() !== selected5[i].a.toUpperCase()) resetQuiz();
-  else document.getElementById("res"+i).textContent="✔ சரி!";
+  let selected = document.querySelector("input[name='mcq"+i+"']:checked");
+  if(!selected){
+    document.getElementById("res"+i).textContent="❌ தேர்வு செய்யவில்லை!";
+    return;
+  }
+  if(selected.value.toUpperCase() !== selected5[i].a.toUpperCase()){
+    resetQuiz();
+  } else {
+    document.getElementById("res"+i).textContent="✔ சரி!";
+  }
 }
 
 function checkAllAnswers(){
-  let ok = selected5.every((m,i)=>{
+  let allCorrect = selected5.every((m,i)=>{
     let s = document.querySelector("input[name='mcq"+i+"']:checked");
     return s && s.value.toUpperCase()===m.a.toUpperCase();
   });
-  if(ok){
+
+  if(allCorrect){
     document.getElementById("locationClue").style.display="block";
     document.getElementById("level3Btn").style.display="block";
-  } else resetQuiz();
+  } else {
+    resetQuiz();
+  }
 }
 
-function goToLevel3(){ window.location.href="/level3"; }
-
-// ⛔ Block this page if level 1 not done
-if(localStorage.getItem("level1_done") !== "true"){
-  document.body.innerHTML="";
-  document.body.style.display="flex";
-  document.body.style.justifyContent="center";
-  document.body.style.alignItems="center";
-  document.body.style.height="100vh";
-  document.body.style.color="#ffb0b0";
-  document.body.style.fontSize="24px";
-  document.body.style.fontWeight="700";
-  document.body.innerText="❗ Level 1 complete செய்யாமல் தொடர முடியாது!";
+function goToLevel3(){
+  window.location.href="/level3";
 }
+// ❌ Disable Back Button
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+  history.go(1);
+};
 </script>
 
 </body>
