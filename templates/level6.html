@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,22 +19,18 @@ body {
   width: 100%;
   background: #1c120e;
   padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
   height: 70px;
   box-sizing: border-box;
-}
-
-.header .left-text {
-  font-size: 15px;
-  font-weight: 700;
-  color: #e6c9a8;
-  white-space: nowrap;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:20px;
+  font-weight:700;
+  color:#e6c9a8;
 }
 
 .page-wrapper {
@@ -115,36 +111,38 @@ body {
   text-align: center;
 }
 
-#success-img {
+footer {
+  text-align: center;
+  padding: 14px;
+  background: #1a0f0b;
+  font-size: 13px;
+  color: #c69c6d;
   width: 100%;
-  max-width: 320px;
-  border-radius: 10px;
-  margin: auto;
-  display: none;
-  margin-top: 20px;
-  border: 2px solid #d9b38c;
-  padding: 5px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  box-sizing: border-box;
+  font-weight:600;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <div class="left-text">Rush Hour -2026 </div>
-</div>
+<div class="header">Rush Hour - 2026</div>
 
 <div class="page-wrapper">
 
   <div class="level-title">Level 6 – Tower & Flip</div>
 
   <div class="desc-box">
-     LEVEL 6:  
-    Player 1 must build a tower of 6 cups using only a balloon — **no hands can touch the cups**.  
-    Once the tower stands, Player 2 gets **2 bottle-flip attempts**.  
-    - Upright landing = **WIN + Final clue unlocked** 
-    - Fail = **Restart from tower building** 
-    Crack the code below after completing the task to reveal your final clue!
+    <b>LEVEL 6:</b><br>
+    Player 1 must build a tower of 6 cups using only a balloon — **no hands can touch the cups**.<br>
+    Once the tower stands, Player 2 gets **2 bottle-flip attempts**.<br>
+    - Upright landing = **WIN + Final clue unlocked**<br>
+    - Fail = **Restart from tower building**<br>
+    Enter the secret code below after completing the task to reveal your final clue!
   </div>
 
   <div class="code-section">
@@ -154,30 +152,53 @@ body {
 
   <div id="clue-box">
      The final treasure is hidden where your journey began — Find the clue Keeper
-     <br>Last clue <br> Clue Keeper: A medium height person with specs sitting under the roof with green colour
+     <br><br>Last Clue<br>
+     Clue Keeper: A medium height person with specs sitting under the roof with green colour
   </div>
-
-  <!-- optional success image -->
-<footer class="footer">
-  © 2026 Rush hour | Level 6 Challenge
-</footer>
 
 </div>
 
+<footer>© 2026 Rush Hour | Level 6 Challenge</footer>
+
 <script>
+let level1 = localStorage.getItem("level1_done");
+
 function verifyCode(){
   let entered = document.getElementById("unlockCode").value.trim().toUpperCase();
-  let correct = "C56L90Z78"; // final unlock code
+  let correct = "C56L90Z78";
 
   if(entered === correct){
      document.getElementById("clue-box").style.display = "block";
-     document.getElementById("success-img").style.display = "block";
      document.getElementById("unlockCode").disabled = true;
   } else {
      alert("❌ Wrong Code 🩶 Try again!");
   }
 }
+
+// 🚫 Block Levels if Level 1 not completed
+if(level1 !== "true"){
+  if(window.location.pathname.toLowerCase().includes("level2") ||
+     window.location.pathname.toLowerCase().includes("level3") ||
+     window.location.pathname.toLowerCase().includes("level4") ||
+     window.location.pathname.toLowerCase().includes("level5") ||
+     window.location.pathname.toLowerCase().includes("level6")){
+        document.body.innerHTML = "";
+        document.body.style.display="flex";
+        document.body.style.justifyContent="center";
+        document.body.style.alignItems="center";
+        document.body.style.height="100vh";
+        document.body.style.fontSize="24px";
+        document.body.style.color="#ffb0b0";
+        document.body.style.fontWeight="700";
+        document.body.innerText = "❗ Complete Level 1 first to continue!";
+  }
+}
+
+// ❌ Disable Back Button
+history.pushState(null, null, location.href);
+window.onpopstate = () => history.go(1);
 </script>
 
 </body>
 </html>
+
