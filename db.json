@@ -1,12 +1,4 @@
 {
-  "teams": ["CSE"],
-  "scores": {
-    "CSE": {
-      "score": 10,
-      "updated_at": "14:05:30",
-      "login_time": "13:02:11"
-    }
-  },
-  "hunt_start_time": "13:02:11",
   "official_qr_code": "SIET-RUSH-HUNT-2026"
+
 }

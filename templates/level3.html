@@ -12,9 +12,6 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #2b1d16;
   color: #f2e1c1;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   padding: 14px;
 }
 
@@ -29,12 +26,12 @@ body {
   top: 0;
   left: 0;
   z-index: 1000;
-  border-bottom: 2px solid rgba(198,156,109,0.3);
+  height: 70px;
   box-sizing: border-box;
 }
 
 .header .left-text {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 700;
   color: #e6c9a8;
   white-space: nowrap;
@@ -43,16 +40,35 @@ body {
 .nav-right a {
   text-decoration: none;
   color: #f2e1c1;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   margin-left: 16px;
 }
 
+footer {
+  text-align: center;
+  padding: 14px;
+  background: #1a0f0b;
+  font-size: 13px;
+  color: #c69c6d;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  height: 50px;
+  left: 0;
+  box-sizing: border-box;
+}
+
 .page-wrapper {
-  width: 96%;
-  max-width: 650px;
-  margin: auto;
-  padding-top: 110px;
+  position: fixed;
+  top: 70px;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .level-title {
@@ -65,6 +81,7 @@ body {
 
 .desc-box {
   width: 100%;
+  max-width: 650px;
   background: rgba(255,248,240,0.06);
   border: 1px solid rgba(217,179,140,0.3);
   padding: 18px 20px;
@@ -72,7 +89,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   text-align: justify;
-  box-sizing: border-box;
+  margin: auto;
 }
 
 .code-section {
@@ -90,7 +107,9 @@ body {
   border-radius: 8px;
   border: 1px solid rgba(217,179,140,0.3);
   background: rgba(255,255,255,0.1);
-  color: #fff;
+  color: white;
+  text-align: center;
+  font-weight: 600;
   outline: none;
   box-sizing: border-box;
 }
@@ -102,7 +121,7 @@ body {
   background: #8b5e3c;
   border: none;
   border-radius: 8px;
-  color: #fff;
+  color: white;
   font-weight: 700;
   cursor: pointer;
   width: 100%;
@@ -121,18 +140,11 @@ body {
   text-align: center;
 }
 
-footer {
-  text-align: center;
-  padding: 14px;
-  background: #1a0f0b;
-  font-size: 13px;
-  color: #c69c6d;
-  border-top: 2px solid rgba(230,201,168,0.2);
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  box-sizing: border-box;
+#nextLevelBtn {
+  display: none;
+  max-width: 320px;
+  margin: auto;
+  margin-top: 16px;
 }
 </style>
 </head>
@@ -140,7 +152,7 @@ footer {
 <body>
 
 <div class="header">
-  <div class="left-text">Rush Hour Treasure Hunt</div>
+  <div class="left-text">Rush Hour</div>
   <div class="nav-right">
     <a href="/index">Home</a>
     <a href="/leaderboard">Leaderboard</a>
@@ -151,32 +163,49 @@ footer {
   <div class="level-title">Level 3 – The Balance Burst</div>
 
   <div class="desc-box">
-    One member balances a lemon on a spoon and taps a balloon step-by-step from bottom to top. After finishing, the partner repeats. When both finish without dropping, the next clue is given.
+    Your team must balance a cup of water and burst a balloon using only shoulder taps, **without dropping the cup**.  
+    Complete this challenge to unlock the next level by entering the secret code below!
   </div>
 
   <div class="code-section">
-    <input placeholder="Enter Level 4 Code" id="level4code">
+    <input placeholder="Enter Level 3 Unlock Code" id="unlockCode">
     <button class="submit-btn" onclick="verifyCode()">Submit Code</button>
   </div>
 
   <div id="clueBox">
-     📍 Next Location Clue: Go to the Old Canteen beside the basketball court
+        🎉 Congratulations! You've unlocked Level 4!<br>
+     The place where the splaing is legal(Ball)
   </div>
+
+  <button id="nextLevelBtn" class="submit-btn" onclick="goToLevel4()">
+     Move to Level 4
+  </button>
 </div>
 
-<footer>© 2026 Treasure Hunt | Level 3 Challenge</footer>
+<footer>© 2026 Rush Hour | Level 3 Challenge</footer>
 
 <script>
 function verifyCode(){
-  let entered = document.getElementById("level4code").value.trim().toUpperCase();
-  let correct = "BALANCE-BURST-77"; // your Level 3 unlock code
+  let entered = document.getElementById("unlockCode").value.trim().toUpperCase();
+  let correct = "R34S34T34"; // 🔐 Level 3 unlock code
 
   if(entered === correct){
      document.getElementById("clueBox").style.display = "block";
+     document.getElementById("nextLevelBtn").style.display = "block";
+     document.getElementById("unlockCode").disabled = true;
   } else {
      alert("❌ Wrong Code 🩶 Try again!");
   }
 }
+
+function goToLevel4(){
+  window.location.href = "/level4"; // ➤ Moves correctly to Level 4 ✔
+}
+// ❌ Disable Back Button
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+  history.go(1);
+};
 </script>
 
 </body>

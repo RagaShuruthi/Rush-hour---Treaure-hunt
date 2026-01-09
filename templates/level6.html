@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Level 6 – The Dizzy Shot</title>
+<title>Final Level – Tower & Flip</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -12,9 +12,6 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #2b1d16;
   color: #f2e1c1;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   padding: 14px;
 }
 
@@ -29,37 +26,29 @@ body {
   top: 0;
   left: 0;
   z-index: 1000;
-  border-bottom: 2px solid rgba(198,156,109,0.3);
+  height: 70px;
   box-sizing: border-box;
-
 }
 
 .header .left-text {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #e6c9a8;
   white-space: nowrap;
 }
 
-.nav-right a {
-  text-decoration: none;
-  color: #f2e1c1;
-  font-size: 16px;
-  font-weight: 600;
-  margin-left: 16px;
-}
-
 .page-wrapper {
-  width: 96%;
+  margin-top: 90px;
+  padding: 20px;
+  width: 100%;
   max-width: 650px;
-  margin: 0;
-  margin-top: 70px;  /* 👈 small spacing only */
-  padding: 10px 0;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
-
 
 .level-title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   color: #d9b38c;
   margin-bottom: 16px;
@@ -93,7 +82,9 @@ body {
   border-radius: 8px;
   border: 1px solid rgba(217,179,140,0.3);
   background: rgba(255,255,255,0.1);
-  color: #fff;
+  color: white;
+  text-align: center;
+  font-weight: 600;
   outline: none;
   box-sizing: border-box;
 }
@@ -105,37 +96,34 @@ body {
   background: #8b5e3c;
   border: none;
   border-radius: 8px;
-  color: #fff;
+  color: white;
   font-weight: 700;
   cursor: pointer;
   width: 100%;
 }
 
-#clueBox {
+#clue-box {
   display: none;
   margin-top: 24px;
   padding: 16px;
   background: rgba(255,255,255,0.08);
   border: 2px solid rgba(217,179,140,0.3);
   border-radius: 12px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #fff8d2;
   text-align: center;
 }
 
-footer {
-  text-align: center;
-  padding: 14px;
-  background: #1a0f0b;
-  font-size: 13px;
-  color: #c69c6d;
-  border-top: 2px solid rgba(230,201,168,0.2);
+#success-img {
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  box-sizing: border-box;
+  max-width: 320px;
+  border-radius: 10px;
+  margin: auto;
+  display: none;
+  margin-top: 20px;
+  border: 2px solid #d9b38c;
+  padding: 5px;
 }
 </style>
 </head>
@@ -144,40 +132,49 @@ footer {
 
 <div class="header">
   <div class="left-text">Rush Hour</div>
-  <div class="nav-right">
-    <a href="/index">Home</a>
-    <a href="/leaderboard">Leaderboard</a>
-  </div>
 </div>
 
 <div class="page-wrapper">
-  <div class="level-title">Level 6 – The Dizzy Shot</div>
+
+  <div class="level-title">Level 6 – Tower & Flip</div>
 
   <div class="desc-box">
-    One member spins 7–8 times, picks a ball, and places it inside a marked area. If the ball stays inside, the level is cleared. Any one member finishing successfully is enough — the team then receives the final riddle.
+     LEVEL 6:  
+    Player 1 must build a tower of 6 cups using only a balloon — **no hands can touch the cups**.  
+    Once the tower stands, Player 2 gets **2 bottle-flip attempts**.  
+    - Upright landing = **WIN + Final clue unlocked** 
+    - Fail = **Restart from tower building** 
+    Crack the code below after completing the task to reveal your final clue!
   </div>
 
   <div class="code-section">
-    <input placeholder="Enter Unlock Code" id="unlockCode">
+    <input placeholder="Enter Final Unlock Code" id="unlockCode">
     <button class="submit-btn" onclick="verifyCode()">Submit Code</button>
   </div>
 
-  <div id="clueBox">
-     📍 Next Location Clue: Go to the Innovation Block 3rd Floor (Near the AI Lab)
+  <div id="clue-box">
+     The final treasure is hidden where your journey began — Find the clue Keeper
+     <br>Last clue <br> Clue Keeper: A medium height person with specs sitting under the roof with green colour
   </div>
-</div>
 
-<footer>© 2026 Treasure Hunt | Level 4 Challenge</footer>
+  <!-- optional success image -->
+<footer class="footer">
+  © 2026 Rush hour | Level 6 Challenge
+</footer>
+
+</div>
 
 <script>
 function verifyCode(){
   let entered = document.getElementById("unlockCode").value.trim().toUpperCase();
-  let correct = "TOWER-FLIP-44"; // change this to your actual unlock code
+  let correct = "C56L90Z78"; // final unlock code
 
   if(entered === correct){
-     document.getElementById("clueBox").style.display = "block";
+     document.getElementById("clue-box").style.display = "block";
+     document.getElementById("success-img").style.display = "block";
+     document.getElementById("unlockCode").disabled = true;
   } else {
-     alert("❌ Wrong Code 🩶 Restart the challenge and try again!");
+     alert("❌ Wrong Code 🩶 Try again!");
   }
 }
 </script>

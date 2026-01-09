@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Level 1 – Hidden Gateway</title>
-
-<!-- QR Scanner Library -->
-<script src="https://unpkg.com/html5-qrcode"></script>
+<title>Level 2 – Pongal MCQ Vault</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -15,105 +12,37 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #2b1d16;
   color: #f2e1c1;
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
   padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
   width: 100%;
   background: #1c120e;
   padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  border-bottom: 2px solid rgba(198,156,109,0.3);
-  box-sizing: border-box;
-}
-
-.header .left-text {
   font-size: 20px;
   font-weight: 700;
   color: #e6c9a8;
-  white-space: nowrap;
+  box-sizing: border-box;
 }
 
-.nav-right {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-right a {
-  text-decoration: none;
-  color: #f2e1c1;
-  font-size: 16px;
-  font-weight: 600;
-  transition: 0.3s;
-  white-space: nowrap;
-}
-
-/* Universal responsiveness for all phones */
-@media (max-width: 600px) {
-  .header {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px;
-  }
-
-  .header .left-text {
-    width: 100%;
-    text-align: center;
-    font-size: 17px;
-  }
-
-  .nav-right {
-    justify-content: center;
-    width: 100%;
-    gap: 14px;
-  }
-
-  .nav-right a {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 360px) {
-  .header .left-text {
-    font-size: 15px;
-  }
-  .nav-right a {
-    font-size: 12.5px;
-  }
-}
-
-
-/* Main content */
 .page-wrapper {
   width: 96%;
-  max-width: 650px;
+  max-width: 750px;
   margin: auto;
+  padding-top: 130px;
   flex: 1;
-  padding-top: 110px; /* avoid overlap with fixed header */
-}
-
-/* Level 1 description */
-.level-desc {
-  font-size: 22px;
-  font-weight: 700;
-  color: #d9b38c;
-  margin-bottom: 16px;
-  text-align: left;
 }
 
 .desc-box {
   width: 100%;
-  max-width: 650px;
   background: rgba(255,248,240,0.06);
   border: 1px solid rgba(217,179,140,0.3);
   padding: 18px 20px;
@@ -121,87 +50,42 @@ body {
   font-size: 16px;
   line-height: 1.6;
   text-align: justify;
-  opacity: 0.95;
   box-sizing: border-box;
-  margin-left: 0;  /* 👈 forces it left */
-  margin-right: auto; /* keeps only this box left without shifting others */
+  margin-bottom: 25px;
+  color:#d9c5b0;
 }
 
-
-/* Scan button */
-.scan-btn {
-  padding: 12px 22px;
-  font-size: 18px;
-  background: #8b5e3c;
-  border: none;
-  border-radius: 10px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 18px;
-  width: 100%;
-  max-width: 220px;
-  display: block;
-}
-
-.scan-btn:hover {
-  background: #a97458;
-  transform: scale(1.03);
-}
-
-/* QR Reader box */
-#reader {
-  width: 100%;
-  max-width: 340px;
-  margin: auto;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 2px dashed rgba(217,179,140,0.4);
-  background: rgba(0,0,0,0.18);
-  padding: 8px;
-  display: none;
-  min-height: 260px;
-}
-
-/* Riddle section */
-.riddle-section {
-  width: 100%;
-  display: none;
-  flex-direction: column;
-  gap: 18px;
-  margin-top: 26px;
-}
-
-.riddle-box {
-  width: 100%;
-  background: rgba(255,248,240,0.05);
-  border: 1px solid rgba(217,179,140,0.22);
+.mcq-box {
+  background: rgba(255,255,255,0.08);
   padding: 16px;
-  border-radius: 10px;
-}
-
-.riddle {
-  font-size: 17px;
-  font-weight: 600;
-  color: #ffd9b3;
-  margin-bottom: 6px;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
   border-radius: 8px;
-  border: 1px solid rgba(217,179,140,0.3);
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  outline: none;
+  margin-bottom: 14px;
+  border-left: 4px solid #c69c6d;
+  font-weight: 600;
 }
 
-button.submit-riddle {
+.check-btn {
+  background:#d9b38c;
+  color:#000;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+  margin-top:10px;
+}
+
+.result-icon {
+  margin-left:10px;
+  font-size:18px;
+  font-weight:700;
+  color:#fff8d2;
+}
+
+.submit-btn, #level3Btn {
   margin-top: 20px;
   padding: 12px;
-  font-size: 18px;
+  font-size: 16px;
   background: #8b5e3c;
   border: none;
   border-radius: 8px;
@@ -209,132 +93,178 @@ button.submit-riddle {
   font-weight: 700;
   cursor: pointer;
   width: 100%;
-  max-width: 240px;
+  max-width: 320px;
   margin-left: auto;
   margin-right: auto;
+  display: block;
 }
 
-/* Footer */
+#level3Btn {
+  display:none;
+  background:#4caf50;
+}
+
+#locationClue {
+  display:none;
+  background: rgba(0,0,0,0.4);
+  padding:15px;
+  border-radius:10px;
+  margin-top:25px;
+  font-size:17px;
+  font-weight:700;
+  text-align:center;
+  color:#a8ffb0;
+  border:2px dashed #c69c6d;
+}
+
 footer {
   text-align: center;
   padding: 14px;
   background: #1a0f0b;
   font-size: 13px;
-  width: 100%;
   color: #c69c6d;
   border-top: 2px solid rgba(230,201,168,0.2);
-  margin-top: auto;
-}
-
-/* Phone responsive */
-@media (max-width: 480px) {
-  .header .left-text { font-size: 15px; }
-  .nav-right a { font-size: 13px; }
-  .level-desc { font-size: 18px; }
-  .desc-box { font-size: 14px; padding: 14px 16px; }
-  #reader { max-width: 300px; min-height: 230px; }
-  .riddle { font-size: 15px; }
-  input { font-size: 14px; }
-  button.submit-riddle { font-size: 16px; }
-  footer { font-size: 11px; }
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="left-text">Rush Hour Treasure Hunt</div>
-  <div class="nav-right">
-    <a href="/index"><i class="fa-solid fa-house"></i> Home</a>
-    <a href="/leaderboard"><i class="fa-solid fa-ranking-star"></i> Leaderboard</a>
-  </div>
-</div>
+<div class="header">Rush Hour Treasure Hunt</div>
 
-<!-- MAIN CONTENT -->
 <div class="page-wrapper">
 
-  <div class="level-desc">Level 1 – The Hidden Gateway</div>
-
+  <!-- Level 2 Description in English -->
+  <h2 style="color:#ffddb0;">Level 2 – The Riddle Vault</h2>
   <div class="desc-box">
-    Teams receive an official QR code placed in the event venue. Use this page to scan that QR only. Once verified, 5 riddles will unlock. Solve them all to reveal your Level 2 gateway code. No other QR will be accepted.
-  </div><br>
-
-  <!-- Button to start scanning -->
-  <center><button class="scan-btn" onclick="startScan()">Scan Official QR</button></center>
-
-  <!-- Camera opens here -->
-  <div id="reader"></div>
-
-  <!-- Riddles -->
-  <div class="riddle-section" id="riddles">
-    <div class="riddle-box"><div class="riddle">1. What runs but never walks?</div><input id="a1"></div>
-    <div class="riddle-box"><div class="riddle">2. What shows paths but cannot speak?</div><input id="a2"></div>
-    <div class="riddle-box"><div class="riddle">3. What circles the journey but never stops?</div><input id="a3"></div>
-    <div class="riddle-box"><div class="riddle">4. What glows at night and warns by day?</div><input id="a4"></div>
-    <div class="riddle-box"><div class="riddle">5. What has hands but no arms?</div><input id="a5"></div>
-
-    <button class="submit-riddle" onclick="checkRiddles()">Submit Riddles</button>
+     Welcome to Level 2 of the Rush Hour Treasure Hunt! Enter the unlock code to reveal 5 Pongal-festival themed MCQ riddles from our vault. Solve all correctly to reveal your next location clue and proceed to Level 3!
   </div>
-  
 
-  <div id="level-code" style="display:none;text-align:center;margin-top:22px;font-size:20px;font-weight:700;color:#fff8d2;">
-    Level 2 Code: <span id="code-text"></span>
+  <!-- Unlock Code Section -->
+  <div class="code-section" style="width:100%;max-width:320px;margin:auto;">
+     <input style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(217,179,140,0.3);background:rgba(255,255,255,0.1);color:#fff;outline:none;font-size:16px;box-sizing:border-box;" 
+     placeholder="Enter Level 2 Unlock Code" id="unlockCode">
+     <button class="submit-btn" onclick="unlockQuiz()">Unlock Vault</button>
   </div>
+
+  <!-- Quiz Section -->
+  <div id="quizSection" style="display:none;">
+      <h3 class="level-title" style="text-align:center;color:#ffdca8;margin-top:30px;">🪔 Pongal Festival Quiz</h3>
+      <div id="mcqContainer"></div>
+      <button class="submit-btn" onclick="checkAllAnswers()">Submit</button>
+  </div>
+
+  <!-- Level 3 Location Clue -->
+  <div id="locationClue">📍 Level 3 Location: The place where Wright brothers sleeping</div>
+
+  <!-- Move to Level 3 Button -->
+  <button id="level3Btn" onclick="goToLevel3()">Level 3க்கு செல்ல</button>
 
 </div>
 
-<!-- FOOTER -->
-<footer>© 2026 Treasure Hunt | Level 1 Challenge</footer>
-
+<footer>© 2026 Rush Hour | Level 2 Challenge</footer>
 <script>
-function startScan() {
-  document.getElementById("reader").style.display = "block";
+const questions = [
+  {q:"பொங்கல் பண்டிகை எந்த மாதத்தில் கொண்டாடப்படுகிறது?",a:"தை",options:["ஆடி","சித்திரை","தை","மாசி"]},
+  {q:"பொங்கல் பண்டிகையின் முதல் நாள் எது?",a:"போகி",options:["தை பொங்கல்","மாட்டு பொங்கல்","போகி","காணும் பொங்கல்"]},
+  {q:"மாட்டு பொங்கலில் யாரை வணங்குகிறோம்?",a:"மாடுகள்",options:["சூரியன்","நதி","மாடுகள்","தமிழ் தெய்வங்கள்"]},
+  {q:"ஜல்லிக்கட்டு எந்த ஊரில் பிரசித்தம்?",a:"அலங்காநல்லூர்",options:["சென்னை","கோவை","அலங்காநல்லூர்","திருச்சி"]},
+  {q:"பொங்கல் பானை பெரும்பாலும் எதனால் செய்யப்படுகிறது?",a:"மண்",options:["மண்","இரும்பு","எஃகு","கண்ணாடி"]},
+  {q:"பொங்கல் உணவு எதில் பரிமாறப்படுகிறது?",a:"வாழை இலை",options:["ஸ்டீல் தட்டு","வாழை இலை","பிளாஸ்டிக் தட்டு","தாமரை இலை"]},
+  {q:"பொங்கல் சூரியனை வணங்கும் நாள்?",a:"தை பொங்கல்",options:["போகி","தை பொங்கல்","மாட்டு பொங்கல்","காணும் பொங்கல்"]},
+  {q:"பொங்கும் போது சொல்லும் முழக்கம்?",a:"பொங்கலோ பொங்கல்",options:["வெற்றி","பொங்கலோ பொங்கல்","வாழ்க தமிழ்","ஹேப்பி பொங்கல்"]},
+  {q:"பொங்கல் கோலம் எதனால் வரையப்படுகிறது?",a:"அரிசி மாவு",options:["அரிசி மாவு","பெயிண்ட்","சுண்ணாம்பு","மஞ்சள்"]},
+  {q:"போகி நாளில் எதை எரிப்பார்கள்?",a:"பழைய பொருட்கள்",options:["புதிய ஆடைகள்","பழைய பொருட்கள்","கரும்பு","பானை"]},
+  {q:"பொங்கல் பண்டிகையின் நோக்கம்?",a:"விவசாயத்திற்கு நன்றி",options:["பரிசு பெற","விவசாயத்திற்கு நன்றி","விளையாட்டு","சுற்றுலா"]},
+  {q:"காணும் பொங்கல் பிரசித்தம் எதற்கு?",a:"குடும்ப சந்திப்பு",options:["பட்டாசு","குடும்ப சந்திப்பு","போட்டி","உணவு மட்டும்"]},
+  {q:"பொங்கல் பானை எந்த திசை நோக்கி?",a:"கிழக்கு",options:["வடக்கு","தெற்கு","கிழக்கு","மேற்கு"]},
+  {q:"மாடுகளுக்கு என்ன அலங்காரம்?",a:"மாலை",options:["மாலை","மோதிரம்","வாட்ச்","பட்டு"]},
+  {q:"பொங்கலில் பயன்படும் முக்கிய தானியம்?",a:"அரிசி",options:["கோதுமை","ராகி","சோளம்","அரிசி"]},
+  {q:"பொங்கல் அலங்காரத்தின் நிறம்?",a:"மஞ்சள்",options:["நீலம்","மஞ்சள்","சிகப்பு","பச்சை"]},
+  {q:"பொங்கல் ஒரு ____ விழா?",a:"அறுவடை",options:["கல்வி","அறுவடை","விளையாட்டு","பொழுதுபோக்கு"]},
+  {q:"பொங்கல் பண்டிகையின் கடவுள்?",a:"சூரியன்",options:["சிவன்","முருகன்","விஷ்ணு","சூரியன்"]},
+  {q:"பொங்கல் பானை பொங்க வைக்கப்படும் இடம்?",a:"வீட்டு வாசல்",options:["கோவில்","தோட்டம்","வீட்டு வாசல்","மொட்டைமாடி"]},
+  {q:"பானைக்கு கட்டப்படும் புனித கயிறு?",a:"மஞ்சள் கயிறு",options:["பட்டு கயிறு","மஞ்சள் கயிறு","நூல்","சங்கிலி"]}
+];
 
-  const qrCode = new Html5Qrcode("reader");
-
-  qrCode.start(
-    { facingMode: "environment" },
-    { fps: 10, qrbox: 250 },
-    (decodedText) => {
-        fetch("/verify_qr", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({ qr: decodedText })
-        }).then(res => res.json())
-          .then(data => {
-            if(data.valid){
-               document.getElementById("riddles").style.display = "flex";
-            } else {
-               alert("❌ This is not the official hunt QR!");
-            }
-          })
-        qrCode.stop();
-    }
-  ).catch(err => {
-    alert("Camera permission denied or error ❌");
-  });
+function pickNewSet(){
+  questions.forEach(q => q.options = q.options.sort(()=>Math.random()-0.5));
+  return questions.sort(()=>Math.random()-0.5).slice(0,5);
 }
 
-function checkRiddles() {
-  let user = [
-    document.getElementById("a1").value.trim().toLowerCase(),
-    document.getElementById("a2").value.trim().toLowerCase(),
-    document.getElementById("a3").value.trim().toLowerCase(),
-    document.getElementById("a4").value.trim().toLowerCase(),
-    document.getElementById("a5").value.trim().toLowerCase()
-  ];
+let selected5 = pickNewSet();
 
-  let correct = ["water", "map", "roundabout", "street lights", "clock"];
+function unlockQuiz(){
+  let code = document.getElementById("unlockCode").value.trim().toUpperCase();
+  if(code === "Q34W56E56"){
+    document.getElementById("quizSection").style.display="block";
+    document.getElementById("level3Btn").style.display="none";
+    document.getElementById("locationClue").style.display="none";
+    renderQuiz();
+  } else alert("❌ தவறான Code! மீண்டும் முயற்சிக்கவும் 🩶");
+}
 
-  if(JSON.stringify(user) === JSON.stringify(correct)){
-     document.getElementById("code-text").innerText = "RUSH-NEXT-91";
-     document.getElementById("level-code").style.display = "block";
+function renderQuiz(){
+  selected5 = pickNewSet();
+  document.getElementById("mcqContainer").innerHTML = selected5.map((m,i)=>
+    '<div class="mcq-box">'+
+      '<p>'+(i+1)+'. '+m.q+'</p>'+
+      m.options.map(opt =>
+        '<label><input type="radio" name="mcq'+i+'" value="'+opt+'"> '+opt+'</label><br>'
+      ).join("")+
+      '<button class="check-btn" onclick="checkAnswer('+i+')">Check</button>'+
+      '<span id="res'+i+'" class="result-icon"></span>'+
+    '</div>'
+  ).join("");
+}
+
+function resetQuiz(){
+  document.getElementById("quizSection").style.display="none";
+  selected5 = pickNewSet();
+  document.getElementById("mcqContainer").innerHTML="";
+  alert("❌ ஒரு பதில் தவறு! புதிய கேள்விகள் Load செய்யப்பட்டது 🔄 மீண்டும் Unlock செய்து முயற்சிக்கவும் 🩶");
+}
+
+function checkAnswer(i){
+  let selected = document.querySelector("input[name='mcq"+i+"']:checked");
+  if(!selected){
+    document.getElementById("res"+i).textContent="❌ தேர்வு செய்யவில்லை!";
+    return;
+  }
+  if(selected.value.toUpperCase() !== selected5[i].a.toUpperCase()){
+    resetQuiz();
   } else {
-     alert("❌ Wrong riddles! Try again.");
+    document.getElementById("res"+i).textContent="✔ சரி!";
   }
 }
+
+function checkAllAnswers(){
+  let allCorrect = selected5.every((m,i)=>{
+    let s = document.querySelector("input[name='mcq"+i+"']:checked");
+    return s && s.value.toUpperCase()===m.a.toUpperCase();
+  });
+
+  if(allCorrect){
+    document.getElementById("locationClue").style.display="block";
+    document.getElementById("level3Btn").style.display="block";
+  } else {
+    resetQuiz();
+  }
+}
+
+function goToLevel3(){
+  window.location.href="/level3";
+}
+// ❌ Disable Back Button
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+  history.go(1);
+};
 </script>
 
 </body>

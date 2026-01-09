@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Level 4 – Tower & Flip</title>
+<title>Level 4 – Straw Relay </title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -12,12 +12,10 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #2b1d16;
   color: #f2e1c1;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   padding: 14px;
 }
 
+/* Fixed Header */
 .header {
   width: 100%;
   background: #1c120e;
@@ -29,34 +27,56 @@ body {
   top: 0;
   left: 0;
   z-index: 1000;
-  border-bottom: 2px solid rgba(198,156,109,0.3);
+  height: 70px;
   box-sizing: border-box;
-
 }
-
-.header .left-text {
-  font-size: 16px;
-  font-weight: 700;
-  color: #e6c9a8;
-  white-space: nowrap;
-}
-
 .nav-right a {
   text-decoration: none;
-  color: #f2e1c1;
+  color: #f2e1c1; /* cream color instead of default blue */
   font-size: 16px;
   font-weight: 600;
   margin-left: 16px;
 }
 
-.page-wrapper {
-  width: 96%;
-  max-width: 650px;
-  margin: 0;
-  margin-top: 40px;  /* 👈 small spacing only */
-  padding: 10px 0;
+.nav-right a:visited,
+.nav-right a:active,
+.nav-right a:hover {
+  color: #f2e1c1; /* forces it to stay same even after click */
 }
 
+.header .left-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e6c9a8;
+  white-space: nowrap;
+}
+
+/* Fixed Footer */
+footer {
+  text-align: center;
+  padding: 14px;
+  background: #1a0f0b;
+  font-size: 13px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  box-sizing: border-box;
+}
+
+/* Scrollable Middle Content */
+.page-wrapper {
+  position: fixed;
+  top: 70px;      /* below header */
+  bottom: 50px;   /* above footer */
+  left: 0;
+  right: 0;
+  overflow-y: auto; /* SCROLL ENABLED ✔ */
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
 
 .level-title {
   font-size: 22px;
@@ -68,6 +88,7 @@ body {
 
 .desc-box {
   width: 100%;
+  max-width: 650px;
   background: rgba(255,248,240,0.06);
   border: 1px solid rgba(217,179,140,0.3);
   padding: 18px 20px;
@@ -76,6 +97,7 @@ body {
   line-height: 1.6;
   text-align: justify;
   box-sizing: border-box;
+  margin: auto;
 }
 
 .code-section {
@@ -124,18 +146,12 @@ body {
   text-align: center;
 }
 
-footer {
-  text-align: center;
-  padding: 14px;
-  background: #1a0f0b;
-  font-size: 13px;
-  color: #c69c6d;
-  border-top: 2px solid rgba(230,201,168,0.2);
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  box-sizing: border-box;
+#nextLevelBtn {
+  display: none;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 16px;
 }
 </style>
 </head>
@@ -151,10 +167,11 @@ footer {
 </div>
 
 <div class="page-wrapper">
+
   <div class="level-title">Level 4 – Tower & Flip</div>
 
   <div class="desc-box">
-    Member 1 builds a cup tower using only a balloon (no hands to touch cups). After tower is complete, Member 2 gets 2 bottle-flip tries. If upright → success → next clue. If fail → restart from tower building.
+     Member 1 must lift and hold a small square paper using only straw suction (no hands allowed) and carefully walk it to their partner. The partner can collect the paper with their hands once delivered. This pass must be completed 5 successful times without dropping or touching the paper by hand. If all 5 transfers are clean, the level is completed and the final riddle is unlocked. Focus, balance, and teamwork are the keys to finish strong!
   </div>
 
   <div class="code-section">
@@ -163,23 +180,43 @@ footer {
   </div>
 
   <div id="clueBox">
-     📍 Next Location Clue: Go to the Innovation Block 3rd Floor (Near the AI Lab)
+     📍 I am not a car , I am not a train , I carry crowds in sun and rain
   </div>
+
+  <button id="nextLevelBtn" class="submit-btn" onclick="goToLevel5()">
+     Move to Level 5
+  </button>
+
+  <!-- This spacer ensures scroll testing -->
+  <div style="height:800px;"></div>
+
 </div>
 
-<footer>© 2026 Treasure Hunt | Level 4 Challenge</footer>
+<footer>© 2026 Rush Hour| Level 4 Challenge</footer>
 
 <script>
 function verifyCode(){
   let entered = document.getElementById("unlockCode").value.trim().toUpperCase();
-  let correct = "TOWER-FLIP-44"; // change this to your actual unlock code
+  let correct = "V56N67M89"; //el 4 unlock code
 
   if(entered === correct){
      document.getElementById("clueBox").style.display = "block";
+     document.getElementById("nextLevelBtn").style.display = "block";
+     document.getElementById("unlockCode").disabled = true;
   } else {
-     alert("❌ Wrong Code 🩶 Restart the challenge and try again!");
+     alert("❌ Wrong Code 🩶 Try again!");
   }
 }
+
+function goToLevel5(){
+  window.location.href = "/level5"; // REDIRECT TO LEVEL 5 ✔
+}
+// ❌ Disable Back Button
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+  history.go(1);
+};
+
 </script>
 
 </body>
