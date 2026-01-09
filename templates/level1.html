@@ -18,44 +18,22 @@ body {
   flex-direction: column;
   min-height: 100vh;
   padding: 14px;
-  overflow-y: auto;      /* ✔ scrolling enabled */
-  padding-bottom: 80px;  /* ✔ space for fixed footer */
+  overflow-y: auto;
+  padding-bottom: 80px;
 }
 
 .header {
   width: 100%;
   background: #1c120e;
   padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  border-bottom: 2px solid rgba(198,156,109,0.3);
-  box-sizing: border-box;
-}
-
-.header .left-text {
   font-size: 14px;
   font-weight: 700;
   color: #e6c9a8;
-  white-space: nowrap;
-}
-
-.nav-right {
-  display: flex;
-  gap: 12px;
-}
-
-.nav-right a {
-  text-decoration: none;
-  color: #f2e1c1;
-  font-size:13px;
-  font-weight: 600;
-  transition: 0.3s;
-  white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .page-wrapper {
@@ -64,30 +42,18 @@ body {
   margin: auto;
   flex: 1;
   padding-top: 110px;
-  min-height: calc(100vh - 160px); /* ✔ ensures content can grow */
-}
-
-.level-desc {
-  font-size: 22px;
-  font-weight: 700;
-  color: #d9b38c;
-  margin-bottom: 16px;
-  text-align: left;
 }
 
 .desc-box {
   width: 100%;
-  max-width: 650px;
   background: rgba(255,248,240,0.06);
   border: 1px solid rgba(217,179,140,0.3);
   padding: 18px 20px;
   border-radius: 12px;
   font-size: 16px;
-  line-height: 1.6;
   text-align: justify;
-  opacity: 0.95;
   box-sizing: border-box;
-  margin-right: auto;
+  margin-bottom: 25px;
 }
 
 .scan-btn {
@@ -101,12 +67,6 @@ body {
   cursor: pointer;
   width: 100%;
   max-width: 220px;
-  display: block;
-}
-
-.scan-btn:hover {
-  background: #a97458;
-  transform: scale(1.03);
 }
 
 #reader {
@@ -114,7 +74,6 @@ body {
   max-width: 340px;
   margin: auto;
   border-radius: 12px;
-  overflow: hidden;
   border: 2px dashed rgba(217,179,140,0.4);
   background: rgba(0,0,0,0.18);
   padding: 8px;
@@ -128,44 +87,25 @@ body {
   margin-top: 22px;
   font-size: 20px;
   font-weight: 700;
-  color: #fff8d2;
+  color: #a8ffb0;
   padding: 16px;
   background: rgba(255,255,255,0.08);
-  border: 2px solid rgba(217,179,140,0.3);
+  border: 2px dashed #c69c6d;
   border-radius: 12px;
-}
-
-footer {
-  text-align: center;
-  padding: 14px;
-  background: #1a0f0b;
-  font-size: 13px;
-  color: #c69c6d;
-  border-top: 2px solid rgba(230,201,168,0.2);
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  box-sizing: border-box;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <div class="left-text">Rush Hour</div>
-  <div class="nav-right">
-    <a href="/index">Home</a>
-    <a href="/leaderboard">Leaderboard</a>
-  </div>
-</div>
+<div class="header">Rush Hour-2026/div>
 
 <div class="page-wrapper">
-  <div class="level-desc">Level 1 – The Hidden Gateway</div>
+  <div class="level-desc" style="font-size:22px;font-weight:700;color:#d9b38c;">Level 1 – The Hidden Gateway</div>
+
   <div class="desc-box">
-    Teams receive an official QR code placed in the event venue. Scan only that QR to unlock your next location clue.
-  </div><br>
+    Teams receive an official QR code placed in the event venue. Scan or Upload only that QR to unlock your Level 2 clue.
+  </div>
 
   <center><button class="scan-btn" onclick="startCameraScan()">Scan QR (Camera)</button></center><br>
 
@@ -177,14 +117,16 @@ footer {
   <div id="reader"></div>
 
   <div id="clue-box">
-    📍 <span id="clue-text"></span><br><br>
-    <center><button class="scan-btn" onclick="goLevel2()">Move to Level 2</button></center>
+     <span id="clue-text"></span><br><br>
+     <center><button class="scan-btn" onclick="restartScan()">Scan Again</button></center>
   </div>
 </div>
 
-<footer>© 2026 Rush Hour| Level 1 Challenge</footer>
+<footer>© 2026 Rush Hour | Level 1 Challenge</footer>
 
 <script>
+const OFFICIAL_QR = "SIET-RUSH-HUNT-2026"; // the required QR text
+
 let qrScanner = new Html5Qrcode("reader");
 
 function startCameraScan() {
@@ -192,15 +134,36 @@ function startCameraScan() {
   qrScanner.start(
     { facingMode: "environment" },
     { fps: 10, qrbox: 250 },
-    (decodedText) => {
-      qrScanner.stop().then(() => showClue(decodedText));
-    }
+    (decodedText) => validateQR(decodedText)
   ).catch(() => alert("Camera permission denied ❌"));
 }
 
-function showClue(text) {
-  document.getElementById("clue-text").innerText = "QR Scanned ✔ ➤ " + "\nLevel 2 clue unlocked! \n The Smell of coffe leads the way , Near the Xerox shop is where you stay";
-  document.getElementById("clue-box").style.display = "block";
+function validateQR(decodedText){
+  qrScanner.stop();
+  if(decodedText.trim().toUpperCase() === OFFICIAL_QR.toUpperCase()){
+      document.getElementById("clue-box").style.display = "block";
+      document.getElementById("clue-text").innerText = 
+      "QR Verified ✔\n\n Level 2 clue unlocked!\n\nThe smell of coffee leads the way ☕,\nNear the Xerox shop is where you stay 📍";
+  } else {
+      alert("❌ Invalid QR! This is not the official treasure hunt code 🩶");
+      resetUI();
+  }
+}
+
+function restartScan(){
+  resetUI();
+  startCameraScan();
+}
+
+function resetUI(){
+  document.getElementById("clue-box").style.display = "none";
+  document.getElementById("clue-text").innerText = "";
+}
+
+function resetUI(){
+  document.getElementById("reader").style.display = "none";
+  document.getElementById("clue-box").style.display = "none";
+  document.getElementById("clue-text").innerText = "";
 }
 
 document.getElementById("qr-input-file").addEventListener("change", async function() {
@@ -208,21 +171,17 @@ document.getElementById("qr-input-file").addEventListener("change", async functi
   if (!file) return;
   try {
     const decoded = await qrScanner.scanFile(file, true);
-    showClue(decoded);
+    validateQR(decoded);
   } catch {
     alert("No QR detected ❌");
   }
 });
 
-function goLevel2() {
-  window.location.href = "/level2";
+function resetUI(){
+  document.getElementById("reader").style.display = "none";
+  document.getElementById("clue-box").style.display = "none";
+  document.getElementById("clue-text").innerText = "";
 }
-
-// ❌ Disable Back Button
-history.pushState(null, null, location.href);
-window.onpopstate = function () {
-  history.go(1);
-};
 </script>
 
 </body>

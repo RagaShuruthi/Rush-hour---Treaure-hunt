@@ -14,11 +14,15 @@ body {
   color: #f2e1c1;
   min-height: 100vh;
   padding: 14px;
-  overflow-y: auto;
+  padding-top: 70px;  /* ✔ prevents header overlap */
+  padding-bottom: 90px; /* ✔ prevents footer overlap */
+  overflow-y: auto;  /* ✔ enables scroll */
   display: flex;
   flex-direction: column;
 }
-
+.mcq-box {
+  min-height: 140px; /* ✔ just for testing */
+}
 .header {
   width: 100%;
   background: #1c120e;
@@ -38,7 +42,9 @@ body {
   max-width: 750px;
   margin: auto;
   padding-top: 130px;
+  padding-bottom: 120px; /* ✔ gives space for footer and forces scroll illusion fix */
   flex: 1;
+  min-height: 100%; /* ✔ ensures wrapper expands with content */
 }
 
 .desc-box {
@@ -135,7 +141,7 @@ footer {
 
 <body>
 
-<div class="header">Rush Hour Treasure Hunt</div>
+<div class="header">Rush Hour - 2026</div>
 
 <div class="page-wrapper">
 
