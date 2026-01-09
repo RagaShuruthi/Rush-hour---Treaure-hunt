@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +22,6 @@ body {
   padding-bottom: 80px;
 }
 
-/* HEADER BOX */
 .header {
   width: 100%;
   background: #1c120e;
@@ -41,7 +40,6 @@ body {
   border-radius: 0 0 12px 12px;
 }
 
-/* MAIN CONTENT WRAPPER */
 .page-wrapper {
   width: 96%;
   max-width: 650px;
@@ -73,6 +71,9 @@ body {
   cursor: pointer;
   width: 100%;
   max-width: 220px;
+  display:block;
+  margin:auto;
+  margin-top:18px;
 }
 
 #reader {
@@ -86,35 +87,8 @@ body {
   display: none;
   min-height: 260px;
 }
-
-#clue-box {
-  display: none;
-  text-align: center;
-  margin-top: 22px;
-  font-size: 20px;
-  font-weight: 700;
-  color: #a8ffb0;
-  padding: 16px;
-  background: rgba(255,255,255,0.08);
-  border: 2px dashed #c69c6d;
-  border-radius: 12px;
-}
-
-/* FOOTER BOX */
-.footer {
-  width: 100%;
-  background: #1c120e;
-  color: #d9b38c;
-  text-align: center;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  box-sizing: border-box;
-  border-top: 3px solid rgba(217,179,140,0.4);
-  border-radius: 12px 12px 0 0;
+#nextBtn {
+  display:none;
 }
 </style>
 </head>
@@ -124,13 +98,14 @@ body {
 <div class="header">Rush Hour – 2026 Treasure Hunt</div>
 
 <div class="page-wrapper">
+
   <div style="font-size:24px;font-weight:700;color:#d9b38c;text-align:center;margin-bottom:18px;">
     🔐 Level 1 – The Hidden Gateway
   </div>
 
   <div class="desc-box">
     Teams receive an official QR code placed in the event venue. Scan or upload **only that QR** to unlock your next clue.  
-    ❗ You **must complete Level 1 first** to continue. Trying to access Level 2 early will not work.
+    ❗ You **must complete Level 1 first** to continue.
   </div>
 
   <center><button class="scan-btn" onclick="startCameraScan()">Scan QR (Camera)</button></center><br>
@@ -142,78 +117,51 @@ body {
 
   <div id="reader"></div>
 
-  <div id="clue-box">
-    <span id="clue-text"></span><br><br>
-    <center><button class="scan-btn" onclick="restartScan()">Scan Again</button></center>
-  </div>
+  <button id="nextBtn" class="scan-btn" onclick="goLevel2()">Move to Level 2</button>
 
-  <div id="block-msg" style="display:none;text-align:center;margin-top:20px;font-size:20px;color:#ffb0b0;font-weight:700;">
-    ❌ You must complete **Level 1** before going to Level 2!
-  </div>
 </div>
 
-<div class="footer">© 2026 Rush Hour | Level 1 Challenge</div>
+<footer class="footer">© 2026 Rush Hour | Level 1 Challenge</footer>
 
 <script>
 const OFFICIAL_QR = "SIET-RUSH-HUNT-2026";
-const OFFICIAL_QR_UPPER = OFFICIAL_QR.toUpperCase();
-
-let scanner = new Html5Qrcode("reader");
+let qrReader = new Html5Qrcode("reader");
 
 function startCameraScan() {
   document.getElementById("reader").style.display = "block";
-  document.getElementById("block-msg").style.display = "none";
-
-  scanner.start(
+  qrReader.start(
     { facingMode: "environment" },
     { fps: 10, qrbox: 250 },
-    (decodedText) => validateQR(decodedText)
-  ).catch(() => alert("Camera permission denied ❌"));
+    (decodedText) => {
+      qrReader.stop().then(() => validateQR(decodedText));
+    }
+  ).catch(() => alert("❌ Camera permission denied"));
 }
 
 function validateQR(text) {
-  scanner.stop().catch(()=>{});
-  if(text.trim().toUpperCase() === OFFICIAL_QR_UPPER){
+  if(text.trim().toUpperCase() === OFFICIAL_QR.toUpperCase()){
     localStorage.setItem("level1_done", "true");
-    document.getElementById("clue-box").style.display = "block";
-    document.getElementById("clue-text").innerText =
-      "QR Verified ✔\n\nLevel 2 clue unlocked!\n\nThe smell of coffee leads the way ☕,\nNear the Xerox shop is where you stay 📍";
+    document.getElementById("nextBtn").style.display = "block";
+    alert("✔ Level 1 Completed! You can now move forward 💙🩶");
   } else {
-    alert("❌ Invalid QR! This is not the official treasure hunt code 🩶");
-    resetUI();
+    alert("❌ Wrong QR! Try again 🩶");
   }
 }
 
-function restartScan(){
-  resetUI();
-  startCameraScan();
-}
-
-function resetUI(){
-  document.getElementById("reader").style.display = "none";
-  document.getElementById("clue-box").style.display = "none";
-  document.getElementById("clue-text").innerText = "";
-}
-
-document.getElementById("qr-input-file").addEventListener("change", async function(){
-  const file = this.files[0];
-  if(!file) return;
-  try{
-    const decoded = await scanner.scanFile(file, true);
-    validateQR(decoded);
-  } catch {
-    alert("No QR detected ❌");
+function goLevel2(){
+  if(localStorage.getItem("level1_done") === "true"){
+     window.location.href = "/level2";
   }
-});
+}
 
-// 🚫 BLOCK LEVEL 2 ACCESS IF LEVEL 1 NOT DONE
+// Block skipping if Level 1 not completed
 if(localStorage.getItem("level1_done") !== "true"){
   if(window.location.pathname.toLowerCase().includes("level2") ||
      window.location.pathname.toLowerCase().includes("level3") ||
      window.location.pathname.toLowerCase().includes("level4") ||
      window.location.pathname.toLowerCase().includes("level5") ||
      window.location.pathname.toLowerCase().includes("level6")){
-        document.body.innerHTML = "";
+        document.body.innerHTML="";
         document.body.style.display="flex";
         document.body.style.justifyContent="center";
         document.body.style.alignItems="center";
@@ -221,9 +169,24 @@ if(localStorage.getItem("level1_done") !== "true"){
         document.body.style.fontSize="24px";
         document.body.style.color="#ffb0b0";
         document.body.style.fontWeight="700";
-        document.body.innerText = "❗ Complete Level 1 first to continue!";
+        document.body.innerText="❗ Complete Level 1 first to continue!";
   }
 }
+
+document.getElementById("qr-input-file").addEventListener("change", async function() {
+  const file = this.files[0];
+  if (!file) return;
+  try {
+    const decoded = await qrReader.scanFile(file, true);
+    validateQR(decoded);
+  } catch {
+    alert("❌ No QR detected!");
+  }
+});
+
+// Disable back button
+history.pushState(null, null, location.href);
+window.onpopstate = () => history.go(1);
 </script>
 
 </body>
