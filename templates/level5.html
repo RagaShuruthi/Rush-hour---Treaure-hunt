@@ -9,65 +9,66 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: #2b1d16;
   color: #f2e1c1;
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
-  padding: 14px;
-  overflow-y: auto;
-  padding-bottom: 80px;
+  padding-top: 70px;
+  padding-bottom: 70px;
 }
 
+/* ---------- HEADER ---------- */
 .header {
   width: 100%;
+  height: 70px;
   background: #1c120e;
-  padding: 12px 16px;
+  padding: 0 16px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
   border-bottom: 2px solid rgba(198,156,109,0.3);
-  box-sizing: border-box;
 }
 
 .header .left-text {
   font-size: 15px;
   font-weight: 700;
   color: #e6c9a8;
-  white-space: nowrap;
 }
 
+/* ---------- CONTENT ---------- */
 .page-wrapper {
-  width: 96%;
+  width: 100%;
   max-width: 650px;
   margin: auto;
-  flex: 1;
-  padding-top: 110px;
-  min-height: calc(100vh - 160px);
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  color: #ffddb0;
 }
 
 .desc-box {
-  width: 100%;
-  max-width: 650px;
   background: rgba(255,248,240,0.06);
   border: 1px solid rgba(217,179,140,0.3);
-  padding: 18px 20px;
+  padding: 18px;
   border-radius: 12px;
   font-size: 16px;
   line-height: 1.6;
   text-align: justify;
-  box-sizing: border-box;
-  margin: auto;
-  font-weight:700;
+  font-weight: 700;
 }
 
+/* ---------- BUTTONS ---------- */
 .scan-btn {
   padding: 12px 22px;
   font-size: 16px;
@@ -78,29 +79,39 @@ body {
   font-weight: 700;
   cursor: pointer;
   width: 100%;
-  max-width: 220px;
+  max-width: 240px;
   display: block;
-  margin: auto;
-  margin-top: 18px;
+  margin: 16px auto 0;
 }
 
+/* ---------- QR SCANNER ---------- */
 #reader {
   width: 100%;
   max-width: 340px;
-  margin: auto;
+  margin: 20px auto;
   border-radius: 12px;
   border: 2px dashed rgba(217,179,140,0.4);
   background: rgba(0,0,0,0.18);
   padding: 8px;
   display: none;
   min-height: 260px;
-  text-align: center;
+}
+
+/* ---------- SUCCESS ---------- */
+#success-img {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 10px;
+  margin: 20px auto;
+  display: none;
+  border: 2px solid #d9b38c;
+  padding: 5px;
 }
 
 #clue-box {
   display: none;
   text-align: center;
-  margin-top: 22px;
+  margin-top: 20px;
   font-size: 20px;
   font-weight: 700;
   color: #fff8d2;
@@ -110,87 +121,76 @@ body {
   border-radius: 12px;
 }
 
-#success-img {
-  width: 100%;
-  max-width: 320px;
-  border-radius: 10px;
-  margin: auto;
-  display: none;
-  margin-top: 20px;
-  border: 2px solid #d9b38c;
-  padding: 5px;
-}
-
+/* ---------- FOOTER ---------- */
 .footer {
   width: 100%;
+  height: 70px;
   background: #1c120e;
-  padding: 12px 16px;
   font-size: 14px;
   font-weight: 700;
   color: #e6c9a8;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   bottom: 0;
   left: 0;
   z-index: 1000;
   border-top: 2px solid rgba(198,156,109,0.3);
-  box-sizing: border-box;
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  <div class="left-text">Rush Hour - 2026<div>
+  <div class="left-text">Rush Hour - 2026</div>
 </div>
 
+<!-- CONTENT -->
 <div class="page-wrapper">
-  <h2 style="text-align:center;color:#ffddb0;">Level 5 – Tower & Flip Final</h2>
+
+  <h2>Level 5 – Tower & Flip Final</h2>
 
   <div class="desc-box">
     <b>Level 5 Challenge:</b><br>
-    Scan the Qr code to ublock the next clue
+    Scan the QR code to unlock the next clue.
   </div>
 
-  <!-- QR Buttons -->
   <button class="scan-btn" onclick="startQRScan()">Scan QR (Camera)</button>
   <button class="scan-btn" onclick="document.getElementById('qr-input-file').click()">Upload QR & Scan</button>
 
-  <!-- Upload input -->
-  <input type="file" id="qr-input-file" accept="image/*" style="display:none;">
+  <input type="file" id="qr-input-file" accept="image/*" hidden>
 
-  <!-- QR Scanner -->
   <div id="reader"></div>
 
-  <!-- Success Image -->
   <img id="success-img" src="/static/clgbackside.jpeg" alt="Unlocked Image">
 
-  <!-- Clue Box -->
   <div id="clue-box">
-    <span id="clue-text">Your next clue in the aboce mentioned place </span>
+    Your next clue is in the above mentioned place
   </div>
 
-  <!-- Level 6 Button -->
-  <div id="navNext" style="display:none;text-align:center;margin-top:20px;">
+  <div id="navNext" style="display:none;text-align:center;">
     <button class="scan-btn" onclick="goLevel6()">Move to Level 6</button>
   </div>
+
 </div>
 
-<footer class="footer">
+<!-- FOOTER -->
+<div class="footer">
   © 2026 Treasure Hunt | Level 5 Final Stage
-</footer>
+</div>
 
 <script>
 const EXPECTED_QR = "SIET-RUSH-HUNT-2026";
-let html5Qr = new Html5Qrcode("reader");
+const html5Qr = new Html5Qrcode("reader");
 
 function startQRScan() {
+  document.getElementById("reader").style.display = "block";
   document.getElementById("success-img").style.display = "none";
   document.getElementById("clue-box").style.display = "none";
   document.getElementById("navNext").style.display = "none";
-
-  document.getElementById("reader").style.display = "block";
 
   html5Qr.start(
     { facingMode: "environment" },
@@ -198,34 +198,33 @@ function startQRScan() {
     (decodedText) => {
       html5Qr.stop().then(() => validateQR(decodedText));
     }
-  ).catch(() => alert("❌ Camera permission denied"));
+  ).catch(() => alert("Camera permission denied"));
 }
 
-function validateQR(scannedText) {
-  if (scannedText.toUpperCase() === EXPECTED_QR.toUpperCase()) {
+function validateQR(text) {
+  if (text.toUpperCase() === EXPECTED_QR) {
     document.getElementById("success-img").style.display = "block";
     document.getElementById("clue-box").style.display = "block";
     document.getElementById("navNext").style.display = "block";
   } else {
-    alert("❌ Wrong QR! Try again");
+    alert("Wrong QR! Try again");
   }
 }
 
-document.getElementById("qr-input-file").addEventListener("change", async function() {
+document.getElementById("qr-input-file").addEventListener("change", async function () {
   const file = this.files[0];
   if (!file) return;
   try {
     const decoded = await html5Qr.scanFile(file, true);
     validateQR(decoded);
   } catch {
-    alert("❌ No QR detected!");
+    alert("No QR detected!");
   }
 });
 
 function goLevel6() {
   window.location.href = "/level6";
 }
-
 
 // Disable back button
 history.pushState(null, null, location.href);
