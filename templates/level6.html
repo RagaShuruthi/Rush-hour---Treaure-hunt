@@ -115,16 +115,23 @@ body {
   text-align: center;
 }
 
-#success-img {
+.footer {
   width: 100%;
-  max-width: 320px;
-  border-radius: 10px;
-  margin: auto;
-  display: none;
-  margin-top: 20px;
-  border: 2px solid #d9b38c;
-  padding: 5px;
+  height: 70px;
+  background: #1c120e;
+  font-size: 14px;
+  font-weight: 700;
+  color: #e6c9a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  border-top: 2px solid rgba(198,156,109,0.3);
 }
+ 
 </style>
 </head>
 
@@ -157,11 +164,9 @@ body {
      <br>Last clue <br> Clue Keeper: A medium height person with specs sitting under the roof with green colour
   </div>
 
-  <!-- optional success image -->
-  <img id="success-img" src="/static/clgbackside.jpeg" alt="Success Image">
-
-</div>
-
+   <div class="footer">
+  © 2026 Treasure Hunt | Level 5 Final Stage
+   </div>
 <script>
 function verifyCode(){
   let entered = document.getElementById("unlockCode").value.trim().toUpperCase();
